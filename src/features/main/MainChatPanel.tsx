@@ -1,6 +1,7 @@
 import { useAppSelector } from "../../app/hooks";
 import { selectActiveChannel } from "../chat/chatSlice";
 import { UsersList } from "../usersList/UsersList";
+import { ChatHistory } from "./ChatHistory";
 import { ChatInput } from "./ChatInput";
 
 export const MainChatPanel = () => {
@@ -22,7 +23,7 @@ export const MainChatPanel = () => {
           </div>
         ) : (
           <>
-            <div style={{ flexGrow: 2, padding: "1rem" }}>Chat history</div>
+            <ChatHistory />
             <ChatInput />
           </>
         )}
