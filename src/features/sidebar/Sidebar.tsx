@@ -1,4 +1,4 @@
-import { NetworksList } from "./NetworksList";
+import { ManageNetworks } from "./ManageNetworks";
 
 export const Sidebar = () => {
   return (
@@ -15,7 +15,7 @@ export const Sidebar = () => {
       >
         IRC Rafa
       </div>
-      <NetworksList />
+      <ManageNetworks />
     </div>
   );
 };
