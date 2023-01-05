@@ -1,35 +1,35 @@
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { NetworkDescription } from "../../types";
 import { selectActiveChannel, changeActiveChannel } from "../chat/chatSlice";
 import { Box } from "@mui/system";
+import { NetworkDescription } from "../chatHistory/chatHistorySlice";
 
 export const NetworksList = ({
-  networksList,
+  networks,
 }: {
-  networksList: NetworkDescription[];
+  networks: Record<string, NetworkDescription>;
 }) => {
   const activeChannel = useAppSelector(selectActiveChannel);
   const dispatch = useAppDispatch();
 
   return (
     <>
-      {networksList.map((network) => (
-        <div key={network.name}>
+      {Object.entries(networks).map(([networkName, network]) => (
+        <div key={networkName}>
           <div
             style={{
               opacity: 0.7,
             }}
           >
-            {network.name}
+            {networkName}
           </div>
           <div style={{ marginLeft: "1rem" }}>
-            {network.channels.map((channel) => (
+            {Object.entries(network.channels).map(([channelName, channel]) => (
               <Box
-                key={channel.name}
+                key={channelName}
                 sx={[
                   { cursor: "pointer", opacity: 0.7 },
-                  network.name === activeChannel?.networkName &&
-                    channel.name === activeChannel.channelName && {
+                  networkName === activeChannel?.networkName &&
+                    channelName === activeChannel.channelName && {
                       fontWeight: "bold",
                       opacity: 1,
                     },
@@ -37,13 +37,13 @@ export const NetworksList = ({
                 onClick={() =>
                   dispatch(
                     changeActiveChannel({
-                      networkName: network.name,
-                      channelName: channel.name,
+                      networkName: networkName,
+                      channelName: channelName,
                     })
                   )
                 }
               >
-                {channel.name}
+                {channelName}
               </Box>
             ))}
           </div>

@@ -1,42 +1,13 @@
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import { NetworksList } from "./NetworksList";
-import { NetworkDescription } from "../../types";
 import { ManageNetworkModal } from "./ManageNetworkModal";
-
-const networksList: NetworkDescription[] = [
-  {
-    name: "LiberaChat",
-    channels: [
-      {
-        name: "#ubuntu",
-        description: "This is a channel for Ubuntu LTS support.",
-      },
-      { name: "#irc", description: "Ask anything about IRC." },
-      {
-        name: "#ubuntu-discussion",
-        description: "Leave your common sense outside.",
-      },
-    ],
-  },
-  {
-    name: "Freenode",
-    channels: [
-      {
-        name: "#ubuntu",
-        description: "This is a channel for Ubuntu LTS support.",
-      },
-      { name: "#freenode", description: "" },
-      {
-        name: "#ubuntu-discussion",
-        description: "Leave your common sense outside.",
-      },
-    ],
-  },
-];
+import { useAppSelector } from "../../app/hooks";
+import { selectChatHistory } from "../chatHistory/chatHistorySlice";
 
 export const ManageNetworks = () => {
   const [manageNetworkData, setManageNetworkData] = useState<{} | undefined>();
+  const networks = useAppSelector(selectChatHistory);
 
   return (
     <aside
@@ -70,7 +41,7 @@ export const ManageNetworks = () => {
           flexGrow: 2,
         }}
       >
-        <NetworksList networksList={networksList} />
+        <NetworksList networks={networks} />
       </div>
     </aside>
   );
