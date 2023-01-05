@@ -1,5 +1,5 @@
 import TextField from "@mui/material/TextField";
-import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useLayoutEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectActiveChannel } from "../chat/chatSlice";
 import { updateChatHistory } from "../chatHistory/chatHistorySlice";
@@ -28,6 +28,13 @@ export const ChatInput = () => {
       setValue("");
     }
   };
+
+  useLayoutEffect(() => {
+    if (value === "") {
+      const chatHistory = document.getElementById("chat-history")!;
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+    }
+  }, [value]);
 
   return (
     <TextField
