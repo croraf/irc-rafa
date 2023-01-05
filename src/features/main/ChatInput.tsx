@@ -34,7 +34,10 @@ export const ChatInput = () => {
       value={value}
       onChange={onChange}
       onKeyDown={onKeyDown}
-      style={{ height: "fit-content", margin: "0.5rem 1rem" }}
+      style={{
+        padding: "0.5rem 1rem",
+        boxSizing: "border-box",
+      }}
       placeholder={`Message ${activeChannel?.channelName}`}
     />
   );

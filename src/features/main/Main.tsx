@@ -16,6 +16,7 @@ export const Main = () => {
         style={{
           borderBottom: "1px solid black",
           height: "50px",
+          minHeight: "50px",
           fontSize: "1.2rem",
           boxSizing: "border-box",
           display: "flex",
@@ -25,7 +26,7 @@ export const Main = () => {
       >
         <Header />
       </div>
-      <div style={{ display: "flex", flexGrow: 2 }}>
+      <div style={{ display: "flex", flexGrow: 2, overflow: "hidden" }}>
         <MainChatPanel />
       </div>
     </main>

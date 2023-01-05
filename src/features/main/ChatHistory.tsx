@@ -25,6 +25,7 @@ export const ChatHistory = () => {
         display: "flex",
         flexDirection: "column",
         rowGap: "1rem",
+        overflow: "auto",
       }}
     >
       {messages.map((message) => (
