@@ -1,15 +1,16 @@
-export const Header = ({
-  activeChannel,
-}: {
-  activeChannel: string | undefined;
-}) => {
-  if (activeChannel === undefined) {
+import { useAppSelector } from "../../app/hooks";
+import { selectActiveChannel } from "../chat/chatSlice";
+
+export const Header = () => {
+  const activeChannel = useAppSelector(selectActiveChannel);
+
+  if (activeChannel === null) {
     return null;
   }
 
   return (
     <>
-      <div>{activeChannel}</div>
+      <div>{activeChannel.channelName}</div>
       <div
         style={{
           height: "80%",

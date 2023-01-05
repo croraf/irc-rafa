@@ -1,11 +1,8 @@
-import { useAppSelector } from "../../app/hooks";
-import { selectActiveChannel } from "../chat/chatSlice";
 import { UsersList } from "../usersList/UsersList";
-import { ChatInput } from "./ChatInput";
 import { Header } from "./Header";
+import { MainChatPanel } from "./MainChatPanel";
 
 export const Main = () => {
-  const activeChannel = useAppSelector(selectActiveChannel);
 
   return (
     <main
@@ -28,7 +25,7 @@ export const Main = () => {
           padding: "0.5rem",
         }}
       >
-        <Header activeChannel={activeChannel?.channelName} />
+        <Header />
       </div>
       <div style={{ display: "flex", flexGrow: 2 }}>
         <div
@@ -39,18 +36,7 @@ export const Main = () => {
             backgroundColor: "rgb(64,67,83)",
           }}
         >
-          {activeChannel === null ? (
-            <div
-              style={{ width: "100%", textAlign: "center", padding: "1rem" }}
-            >
-              Select channel
-            </div>
-          ) : (
-            <>
-              <div style={{ flexGrow: 2, padding: "0.5rem" }}>Chat history</div>
-              <ChatInput />
-            </>
-          )}
+          <MainChatPanel />
         </div>
         <UsersList />
       </div>
