@@ -7,7 +7,7 @@ export const ChatInput = () => {
 
   return (
     <TextField
-      style={{ height: "fit-content" }}
+      style={{ height: "fit-content", margin: "0.5rem" }}
       placeholder={`Message ${activeChannel?.channelName}`}
     />
   );

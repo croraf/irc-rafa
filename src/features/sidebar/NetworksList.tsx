@@ -16,16 +16,15 @@ export const NetworksList = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <aside style={{ width: "150px", display: "flex", flexDirection: "column" }}>
-      <div
-        style={{
-          textAlign: "center",
-          marginBottom: "1rem",
-          fontWeight: "bold",
-        }}
-      >
-        Networks list
-      </div>
+    <aside
+      style={{
+        width: "100%",
+        padding: "0.5rem",
+        display: "flex",
+        flexDirection: "column",
+        boxSizing: "border-box",
+      }}
+    >
       <div style={{ width: "100%", textAlign: "center", marginBottom: "1rem" }}>
         <Button variant="contained" size="small">
           Add network
