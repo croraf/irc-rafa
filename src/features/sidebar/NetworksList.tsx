@@ -42,14 +42,14 @@ export const NetworksList = () => {
     <aside
       style={{
         width: "100%",
-        padding: "0.5rem",
+        padding: "1rem 0.5rem",
         display: "flex",
         flexDirection: "column",
         boxSizing: "border-box",
       }}
     >
       <div style={{ width: "100%", textAlign: "center", marginBottom: "1rem" }}>
-        <Button variant="contained" size="small">
+        <Button variant="contained" size="small" style={{ width: "100%" }}>
           Add network
         </Button>
       </div>

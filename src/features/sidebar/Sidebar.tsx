@@ -10,7 +10,6 @@ export const Sidebar = () => {
           fontSize: "1.5rem",
           lineHeight: "50px",
           textAlign: "center",
-          fontWeight: 'bold',
           boxSizing: 'border-box'
         }}
       >
