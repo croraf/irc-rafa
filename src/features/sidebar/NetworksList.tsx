@@ -4,10 +4,33 @@ import { changeActiveChannel, selectActiveChannel } from "../chat/chatSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 const networksList = [
-  { name: "LiberaChat", channels: ["#ubuntu", "#irc", "#ubuntu-discussion"] },
+  {
+    name: "LiberaChat",
+    channels: [
+      {
+        name: "#ubuntu",
+        description: "This is a channel for Ubuntu LTS support.",
+      },
+      { name: "#irc", description: "Ask anything about IRC." },
+      {
+        name: "#ubuntu-discussion",
+        description: "Leave your common sense outside.",
+      },
+    ],
+  },
   {
     name: "Freenode",
-    channels: ["#ubuntu", "#freenode", "#ubuntu-discussion"],
+    channels: [
+      {
+        name: "#ubuntu",
+        description: "This is a channel for Ubuntu LTS support.",
+      },
+      { name: "#freenode", description: "" },
+      {
+        name: "#ubuntu-discussion",
+        description: "Leave your common sense outside.",
+      },
+    ],
   },
 ];
 
@@ -40,28 +63,35 @@ export const NetworksList = () => {
       >
         {networksList.map((network) => (
           <div key={network.name}>
-            <div>{network.name}</div>
+            <div
+              style={{
+                opacity: 0.7,
+              }}
+            >
+              {network.name}
+            </div>
             <div style={{ marginLeft: "1rem" }}>
               {network.channels.map((channel) => (
                 <Box
-                  key={channel}
+                  key={channel.name}
                   sx={[
-                    { cursor: "pointer" },
+                    { cursor: "pointer", opacity: 0.7 },
                     network.name === activeChannel?.networkName &&
-                      channel === activeChannel.channelName && {
+                      channel.name === activeChannel.channelName && {
                         fontWeight: "bold",
+                        opacity: 1,
                       },
                   ]}
                   onClick={() =>
                     dispatch(
                       changeActiveChannel({
                         networkName: network.name,
-                        channelName: channel,
+                        channelName: channel.name,
                       })
                     )
                   }
                 >
-                  {channel}
+                  {channel.name}
                 </Box>
               ))}
             </div>

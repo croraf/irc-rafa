@@ -16,7 +16,7 @@ export const Header = () => {
           height: "80%",
           width: "1px",
           background: "gray",
-          margin: "0rem 0.5rem",
+          margin: "0rem 1rem",
         }}
       />
       <div style={{ fontSize: "0.9rem", opacity: "0.7" }}>

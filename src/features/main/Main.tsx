@@ -1,9 +1,7 @@
-import { UsersList } from "../usersList/UsersList";
 import { Header } from "./Header";
 import { MainChatPanel } from "./MainChatPanel";
 
 export const Main = () => {
-
   return (
     <main
       style={{
@@ -22,23 +20,13 @@ export const Main = () => {
           boxSizing: "border-box",
           display: "flex",
           alignItems: "center",
-          padding: "0.5rem",
+          padding: "0.5rem 1rem",
         }}
       >
         <Header />
       </div>
       <div style={{ display: "flex", flexGrow: 2 }}>
-        <div
-          style={{
-            flexGrow: 2,
-            display: "flex",
-            flexDirection: "column",
-            backgroundColor: "rgb(64,67,83)",
-          }}
-        >
-          <MainChatPanel />
-        </div>
-        <UsersList />
+        <MainChatPanel />
       </div>
     </main>
   );

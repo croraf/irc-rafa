@@ -29,8 +29,8 @@ export const UsersList = () => {
         >
           Online - 2
         </div>
-        <div style={{ flexGrow: 2 }}>test1</div>
-        <div style={{ flexGrow: 2 }}>test12</div>
+        <div style={{ flexGrow: 2 }}>mark1</div>
+        <div style={{ flexGrow: 2 }}>jasmine</div>
       </div>
     </div>
   );
