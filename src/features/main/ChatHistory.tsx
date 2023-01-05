@@ -1,6 +1,7 @@
 import { useAppSelector } from "../../app/hooks";
 import { selectActiveChannel } from "../chat/chatSlice";
 import { selectChatHistory } from "../chatHistory/chatHistorySlice";
+import { Box } from "@mui/system";
 
 /* const messages = [
   { author: "croraf", text: "Hi how are you.", timestamp: "Today 11:00" },
@@ -18,20 +19,34 @@ export const ChatHistory = () => {
       .messages;
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         flexGrow: 2,
         padding: "1rem",
         display: "flex",
         flexDirection: "column",
-        rowGap: "1rem",
+        rowGap: "0.5rem",
         overflow: "auto",
+        "&::-webkit-scrollbar": {
+          width: "8px",
+        },
+        "&::-webkit-scrollbar-track": {
+          boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.3)",
+          borderRadius: "3px",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "rgb(35,35,35)",
+          borderRadius: "3px",
+        },
       }}
+      id="chat-history"
     >
       {messages.map((message) => (
         <div key={message.timestamp} style={{ width: "100%" }}>
           <div style={{ opacity: 1 }}>
-            <span>{message.author}</span>
+            <span style={{ fontWeight: "bold", fontSize: "0.9rem" }}>
+              {message.author}
+            </span>
             <span
               style={{
                 opacity: "0.7",
@@ -42,9 +57,9 @@ export const ChatHistory = () => {
               {new Date(message.timestamp).toLocaleString("hr")}
             </span>
           </div>
-          <div style={{ opacity: 0.8 }}>{message.text}</div>
+          <div style={{ opacity: 0.8, lineHeight: "1.4" }}>{message.text}</div>
         </div>
       ))}
-    </div>
+    </Box>
   );
 };
