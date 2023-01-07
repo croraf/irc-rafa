@@ -1,27 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
-export interface MessageDescription {
-  author: string;
-  text: string;
-  timestamp: number;
-}
-
 interface ChannelDescription {
   name: string;
   description: string;
-  messages: MessageDescription[];
 }
 
 export interface NetworkDescription {
   name: string;
+  username: string;
+  password: string;
   channels: Record<string, ChannelDescription>;
 }
 
-export interface MessageEntry {
+export interface AddNetwork {
   networkName: string;
-  channelName: string;
-  message: MessageDescription;
+  username: string;
+  password: string;
 }
 
 export interface AddChannel {
@@ -32,34 +27,32 @@ export interface AddChannel {
 
 const initialState: Record<string, NetworkDescription> = {};
 
-export const chatHistorySlice = createSlice({
-  name: "chatHistory",
+export const networksSlice = createSlice({
+  name: "networks",
   initialState,
   reducers: {
-    addChannel: (state, action: PayloadAction<AddChannel>) => {
+    addNetwork: (state, action: PayloadAction<AddNetwork>) => {
       if (state[action.payload.networkName] === undefined) {
         state[action.payload.networkName] = {
           name: action.payload.networkName,
+          username: action.payload.username,
+          password: action.payload.password,
           channels: {},
         };
       }
+    },
+    addChannel: (state, action: PayloadAction<AddChannel>) => {
       state[action.payload.networkName].channels[action.payload.channelName] = {
         name: action.payload.channelName,
         description: "",
-        messages: [],
       };
-    },
-    addMessage: (state, action: PayloadAction<MessageEntry>) => {
-      state[action.payload.networkName].channels[
-        action.payload.channelName
-      ].messages.push(action.payload.message);
     },
     reset: () => initialState,
   },
 });
 
-export const { addMessage, addChannel, reset } = chatHistorySlice.actions;
+export const { addNetwork, addChannel, reset } = networksSlice.actions;
 
-export const selectChatHistory = (state: RootState) => state.chatHistory;
+export const selectNetworks = (state: RootState) => state.networks;
 
-export default chatHistorySlice.reducer;
+export default networksSlice.reducer;

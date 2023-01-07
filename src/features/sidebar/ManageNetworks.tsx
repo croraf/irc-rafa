@@ -3,11 +3,11 @@ import { useState } from "react";
 import { NetworksList } from "./NetworksList";
 import { ManageNetworkModal } from "./ManageNetworkModal";
 import { useAppSelector } from "../../app/hooks";
-import { selectChatHistory } from "../chatHistory/chatHistorySlice";
+import { selectNetworks } from "../networksSlice/networksSlice";
 
 export const ManageNetworks = () => {
   const [manageNetworkData, setManageNetworkData] = useState<{} | undefined>();
-  const networks = useAppSelector(selectChatHistory);
+  const networks = useAppSelector(selectNetworks);
 
   return (
     <aside

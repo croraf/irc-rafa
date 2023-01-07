@@ -1,6 +1,5 @@
 import { useAppSelector } from "../../app/hooks";
-import { selectActiveChannel } from "../chat/chatSlice";
-import { selectChatHistory } from "../chatHistory/chatHistorySlice";
+import { selectChatHistoryMessages } from "../chatHistorySlice/chatHistorySlice";
 import { Box } from "@mui/system";
 
 /* const messages = [
@@ -11,12 +10,7 @@ import { Box } from "@mui/system";
 ]; */
 
 export const ChatHistory = () => {
-  const chatHistory = useAppSelector(selectChatHistory);
-  const activeChannel = useAppSelector(selectActiveChannel);
-
-  const messages =
-    chatHistory[activeChannel!.networkName].channels[activeChannel!.channelName]
-      .messages;
+  const messages = useAppSelector(selectChatHistoryMessages);
 
   return (
     <Box

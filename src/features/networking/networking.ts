@@ -1,30 +1,32 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { useAppDispatch } from "../../app/hooks";
-import { MessageEntry, addMessage } from "../chatHistory/chatHistorySlice";
+import { MessageDescription, addMessage } from "../chatHistorySlice/chatHistorySlice";
 import { insertRow } from "../indexedDb/indexedDb";
-
-let socket: Socket;
 
 export const useNetworking = () => {
   const dispatch = useAppDispatch();
+  const [socket, setSocket] = useState<Socket | undefined>();
 
   useEffect(() => {
-    socket = io("http://localhost:4000");
+    const socketApi = io("http://localhost:4000");
 
-    socket.onAny((msg: MessageEntry) => {
-      console.log('socket message');
+    socketApi.on("chatMessage", (msg: MessageDescription) => {
+      console.log("socket message", msg);
       insertRow(msg);
       dispatch(addMessage(msg));
     });
 
+    socketApi.on("connect", () => {
+      setSocket(socketApi);
+    });
+
     return () => {
       console.log("disconnect");
-      socket.disconnect();
+      socketApi?.disconnect();
+      setSocket(undefined);
     };
   }, [dispatch]);
-};
 
-export const send = (data: MessageEntry) => {
-  socket.send(data);
+  return socket;
 };

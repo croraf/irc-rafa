@@ -1,5 +1,5 @@
 import { useAppSelector } from "../../app/hooks";
-import { selectActiveChannel } from "../chat/chatSlice";
+import { selectActiveChannel } from "../chatHistorySlice/chatHistorySlice";
 import { UsersList } from "../usersList/UsersList";
 import { ChatHistory } from "./ChatHistory";
 import { ChatInput } from "./ChatInput";

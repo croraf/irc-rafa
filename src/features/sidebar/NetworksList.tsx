@@ -1,7 +1,10 @@
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { selectActiveChannel, changeActiveChannel } from "../chat/chatSlice";
 import { Box } from "@mui/system";
-import { NetworkDescription } from "../chatHistory/chatHistorySlice";
+import { NetworkDescription } from "../networksSlice/networksSlice";
+import {
+  changeActiveChannel,
+  selectActiveChannel,
+} from "../chatHistorySlice/chatHistorySlice";
 
 export const NetworksList = ({
   networks,
@@ -37,8 +40,8 @@ export const NetworksList = ({
                 onClick={() =>
                   dispatch(
                     changeActiveChannel({
-                      networkName: networkName,
-                      channelName: channelName,
+                      networkName,
+                      channelName,
                     })
                   )
                 }
