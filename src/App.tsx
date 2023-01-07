@@ -1,8 +1,13 @@
 import "./App.css";
+import { useIndexedDb } from "./features/indexedDb/indexedDb";
 import { Main } from "./features/main/Main";
+import { useNetworking } from "./features/networking/networking";
 import { Sidebar } from "./features/sidebar/Sidebar";
 
 function App() {
+  const connectedToDb = useIndexedDb();
+  useNetworking();
+
   return (
     <div
       style={{
@@ -15,11 +20,15 @@ function App() {
         color: "white",
       }}
     >
-      <Sidebar />
+      {connectedToDb && (
+        <>
+          <Sidebar />
 
-      <div style={{ display: "flex", flexGrow: 2 }}>
-        <Main />
-      </div>
+          <div style={{ display: "flex", flexGrow: 2 }}>
+            <Main />
+          </div>
+        </>
+      )}
     </div>
   );
 }

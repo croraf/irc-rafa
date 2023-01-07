@@ -18,85 +18,47 @@ export interface NetworkDescription {
   channels: Record<string, ChannelDescription>;
 }
 
-export interface ChatHistoryUpdate {
+export interface MessageEntry {
   networkName: string;
   channelName: string;
   message: MessageDescription;
 }
 
-const initialState: Record<string, NetworkDescription> = {
-  "LiberaChat": {
-    name: "LiberaChat",
-    channels: {
-      "#ubuntu": {
-        name: "#ubuntu",
-        description: "This is a channel for Ubuntu LTS support.",
-        messages: [],
-      },
-      "#irc": {
-        name: "#irc",
-        description: "Ask anything about IRC.",
-        messages: [
-          {
-            author: "croraf",
-            text: "Hi how are you.",
-            timestamp: 1672928940924,
-          },
-          {
-            author: "mark1",
-            text: "Hi how are you.",
-            timestamp: 1672928950924,
-          },
-          {
-            author: "croraf",
-            text: "Hi how are you.",
-            timestamp: 1672928950925,
-          },
-          {
-            author: "jasmine",
-            text: "Hi how are you.",
-            timestamp: 1672928970924,
-          },
-        ],
-      },
-      "#ubuntu-discussion": {
-        name: "#ubuntu-discussion",
-        description: "Leave your common sense outside.",
-        messages: [],
-      },
-    },
-  },
-  "Freenode": {
-    name: "Freenode",
-    channels: {
-      "#ubuntu": {
-        name: "#ubuntu",
-        description: "This is a channel for Ubuntu LTS support.",
-        messages: [],
-      },
-      "#freenode": { name: "#freenode", description: "", messages: [] },
-      "#ubuntu-discussion": {
-        name: "#ubuntu-discussion",
-        description: "Leave your common sense outside.",
-        messages: [],
-      },
-    },
-  },
-};
+export interface AddChannel {
+  id: string;
+  networkName: string;
+  channelName: string;
+}
+
+const initialState: Record<string, NetworkDescription> = {};
 
 export const chatHistorySlice = createSlice({
   name: "chatHistory",
   initialState,
   reducers: {
-    updateChatHistory: (state, action: PayloadAction<ChatHistoryUpdate>) => {
+    addChannel: (state, action: PayloadAction<AddChannel>) => {
+      if (state[action.payload.networkName] === undefined) {
+        state[action.payload.networkName] = {
+          name: action.payload.networkName,
+          channels: {},
+        };
+      }
+      state[action.payload.networkName].channels[action.payload.channelName] = {
+        name: action.payload.channelName,
+        description: "",
+        messages: [],
+      };
+    },
+    addMessage: (state, action: PayloadAction<MessageEntry>) => {
       state[action.payload.networkName].channels[
         action.payload.channelName
       ].messages.push(action.payload.message);
     },
+    reset: () => initialState,
   },
 });
 
-export const { updateChatHistory } = chatHistorySlice.actions;
+export const { addMessage, addChannel, reset } = chatHistorySlice.actions;
 
 export const selectChatHistory = (state: RootState) => state.chatHistory;
 

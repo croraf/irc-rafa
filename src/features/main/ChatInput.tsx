@@ -1,13 +1,12 @@
 import TextField from "@mui/material/TextField";
 import { ChangeEvent, KeyboardEvent, useLayoutEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../app/hooks";
 import { selectActiveChannel } from "../chat/chatSlice";
-import { updateChatHistory } from "../chatHistory/chatHistorySlice";
+import { send } from "../networking/networking";
 
 export const ChatInput = () => {
   const activeChannel = useAppSelector(selectActiveChannel);
   const [value, setValue] = useState("");
-  const dispatch = useAppDispatch();
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -15,16 +14,14 @@ export const ChatInput = () => {
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter") {
-      dispatch(
-        updateChatHistory({
-          ...activeChannel!,
-          message: {
-            author: "croraf",
-            text: value,
-            timestamp: Date.now(),
-          },
-        })
-      );
+      send({
+        ...activeChannel!,
+        message: {
+          author: "croraf",
+          text: value,
+          timestamp: Date.now(),
+        },
+      });
       setValue("");
     }
   };
