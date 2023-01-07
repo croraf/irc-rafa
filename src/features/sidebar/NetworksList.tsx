@@ -42,7 +42,8 @@ export const NetworksList = ({
                       { cursor: "pointer", opacity: 0.7 },
                       networkName === activeChannel?.networkName &&
                         channelName === activeChannel.channelName && {
-                          fontWeight: "bold",
+                          fontWeight: "500",
+                          fontStyle: "italic",
                           opacity: 1,
                         },
                       unreadMessages[networkName]?.[channelName] > 0 && {
