@@ -26,11 +26,11 @@ export const ChatHistory = () => {
         },
         "&::-webkit-scrollbar-track": {
           boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.3)",
-          borderRadius: "3px",
+          borderRadius: "10px",
         },
         "&::-webkit-scrollbar-thumb": {
-          backgroundColor: "rgb(35,35,35)",
-          borderRadius: "3px",
+          backgroundColor: "rgb(45,45,45)",
+          borderRadius: "10px",
         },
       }}
       id="chat-history"

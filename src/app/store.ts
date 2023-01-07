@@ -1,13 +1,15 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import counterReducer from "../features/counter/counterSlice";
 import networksReducer from "../features/networksSlice/networksSlice";
 import chatHistoryReducer from "../features/chatHistorySlice/chatHistorySlice";
+import authenticationReducer from "../features/authenticationSlice/authenticationSlice";
+import unreadMessagesReducer from "../features/unreadMessagesSlice/unreadMessagesSlice";
 
 export const store = configureStore({
   reducer: {
     networks: networksReducer,
-    counter: counterReducer,
     chatHistory: chatHistoryReducer,
+    authentication: authenticationReducer,
+    unreadMessages: unreadMessagesReducer,
   },
 });
 

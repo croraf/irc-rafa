@@ -72,6 +72,5 @@ export const selectActiveChannel = (state: RootState) =>
   state.chatHistory.activeChannel;
 export const selectChatHistoryMessages = (state: RootState) =>
   state.chatHistory.messages;
-export const selectNetworks = (state: RootState) => state.chatHistory;
 
 export default chatHistorySlice.reducer;

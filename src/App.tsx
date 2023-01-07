@@ -1,9 +1,9 @@
 import "./App.css";
+import { useAuthenticateAllNetworks } from "./features/authenticationSlice/authenticationSlice";
 import { useIndexedDb } from "./features/indexedDb/indexedDb";
 import { Main } from "./features/main/Main";
 import {
   AuthenticatedContextProvider,
-  useAuthenticationStatus,
 } from "./features/networking/AuthenticatedContext";
 import { useNetworking } from "./features/networking/networking";
 import { SocketContextProvider } from "./features/networking/SocketContext";
@@ -13,7 +13,8 @@ function App() {
   const indexDbLoaded = useIndexedDb();
   const socket = useNetworking();
 
-  const authenticationStatus = useAuthenticationStatus(socket);
+  useAuthenticateAllNetworks(indexDbLoaded, socket);
+  
 
   return (
     <SocketContextProvider value={socket}>

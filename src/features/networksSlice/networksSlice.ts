@@ -20,7 +20,7 @@ export interface AddNetwork {
 }
 
 export interface AddChannel {
-  id: string;
+  channelId: string;
   networkName: string;
   channelName: string;
 }
