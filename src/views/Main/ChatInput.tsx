@@ -1,14 +1,9 @@
 import TextField from "@mui/material/TextField";
 import { ChangeEvent, KeyboardEvent, useLayoutEffect, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
-import {
-  selectIsActiveChannelAuthenticated,
-} from "../authenticationSlice/authenticationSlice";
-import {
-  MessageDescription,
-  selectActiveChannel,
-} from "../chatHistorySlice/chatHistorySlice";
-import { useSocket } from "../networking/SocketContext";
+import { selectIsActiveChannelAuthenticated } from "../../features/authenticationSlice/authenticationSlice";
+import { selectActiveChannel, MessageDescription } from "../../features/chatHistorySlice/chatHistorySlice";
+import { useSocket } from "../../features/networking/SocketContext";
 
 export const ChatInput = () => {
   const activeChannel = useAppSelector(selectActiveChannel);

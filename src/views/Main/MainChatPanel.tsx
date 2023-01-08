@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectActiveChannel } from "../chatHistorySlice/chatHistorySlice";
+import { selectActiveChannel } from "../../features/chatHistorySlice/chatHistorySlice";
 import {
   clearUnreadMessages,
   selectUnreadMessages,
-} from "../unreadMessagesSlice/unreadMessagesSlice";
-import { UsersList } from "../usersList/UsersList";
+} from "../../features/unreadMessagesSlice/unreadMessagesSlice";
+import { UsersList } from "../UsersList/UsersList";
 import { ChatHistory } from "./ChatHistory";
 import { ChatInput } from "./ChatInput";
 

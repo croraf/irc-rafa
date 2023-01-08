@@ -1,5 +1,5 @@
 import { useAppSelector } from "../../app/hooks";
-import { selectActiveChannel } from "../chatHistorySlice/chatHistorySlice";
+import { selectActiveChannel } from "../../features/chatHistorySlice/chatHistorySlice";
 
 export const Header = () => {
   const activeChannel = useAppSelector(selectActiveChannel);

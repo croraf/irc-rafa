@@ -1,39 +1,11 @@
-import { useEffect, useState } from "react";
 import * as JsStore from "jsstore";
 import {
   ActiveChannel,
   MessageDescription,
-  reset as resetChatHistory,
 } from "../chatHistorySlice/chatHistorySlice";
-import workerInjector from "jsstore/dist/worker_injector";
-import { useAppDispatch } from "../../app/hooks";
-import {
-  AddNetwork,
-  AddChannel,
-  addNetwork,
-  addChannel,
-  reset as resetNetworks,
-} from "../networksSlice/networksSlice";
+import { AddNetwork } from "../networksSlice/networksSlice";
 
-const networksTable: JsStore.ITable = {
-  name: "networks",
-  columns: {
-    networkName: { primaryKey: true, dataType: "string" },
-    username: { dataType: "string" },
-    password: { dataType: "string" },
-  },
-};
-
-const channelsTable: JsStore.ITable = {
-  name: "channels",
-  columns: {
-    id: { primaryKey: true, dataType: "string" },
-    channelName: { dataType: "string" },
-    networkName: { dataType: "string" },
-  },
-};
-
-type MessageDbEntry = {
+export type MessageDbEntry = {
   timestamp: number;
   author: string;
   text: string;
@@ -41,58 +13,13 @@ type MessageDbEntry = {
   channelName: string;
 };
 
-const messagesTable: JsStore.ITable = {
-  name: "messages",
-  columns: {
-    timestamp: { primaryKey: true, dataType: "number" },
-    author: { dataType: "string" },
-    text: { dataType: "string" },
-    networkName: { dataType: "string" },
-    channelName: { dataType: "string" },
-  },
-};
-
-const database: JsStore.IDataBase = {
-  name: "irc-rafa",
-  tables: [networksTable, channelsTable, messagesTable],
-};
-
 let connection: JsStore.Connection;
 
-export const useIndexedDb = () => {
-  const dispatch = useAppDispatch();
-  const [connectedToIndexedDb, setConnectedToIndexedDb] = useState(false);
-
-  useEffect(() => {
-    connection = new JsStore.Connection();
-    connection.addPlugin(workerInjector);
-
-    connection.initDb(database).then(async () => {
-      console.log("db opened");
-      // initializeDb(connection);
-
-      // to optimize into promise all
-      const networks = await connection.select<AddNetwork>({
-        from: "networks",
-      });
-      const channels = await connection.select<AddChannel>({
-        from: "channels",
-      });
-
-      dispatch(resetChatHistory());
-      dispatch(resetNetworks());
-      networks.forEach((network) => {
-        dispatch(addNetwork(network));
-      });
-      channels.forEach((channel) => {
-        dispatch(addChannel(channel));
-      });
-
-      setConnectedToIndexedDb(true);
-    });
-  }, [dispatch]);
-
-  return connectedToIndexedDb;
+export const getConnection = () => {
+  return connection;
+};
+export const setConnection = (connectionParam: JsStore.Connection) => {
+  connection = connectionParam;
 };
 
 export const insertRow = (msg: MessageDescription) => {
@@ -106,8 +33,21 @@ export const insertRow = (msg: MessageDescription) => {
     });
 };
 
+export const upsertNetworkRow = (msg: AddNetwork) => {
+  connection
+    .insert<AddNetwork>({
+      into: "networks",
+      upsert: true,
+      values: [msg],
+    })
+    .then(() => {
+      console.log("db insertion completed");
+    });
+};
+
 export const getMessagesForChannel = async (activeChannel: ActiveChannel) => {
   // await new Promise((resolve) => setTimeout(resolve, 1000));
+  console.log("get messages", activeChannel);
   return await connection.select<MessageDbEntry>({
     from: "messages",
     where: {
@@ -116,8 +56,4 @@ export const getMessagesForChannel = async (activeChannel: ActiveChannel) => {
     },
     order: { by: "timestamp", type: "asc" },
   });
-};
-
-export const getConnection = () => {
-  return connection;
 };

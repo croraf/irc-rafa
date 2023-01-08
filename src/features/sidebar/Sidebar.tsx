@@ -1,4 +1,4 @@
-import { ManageNetworks } from "./ManageNetworks";
+import { NetworksPanel } from "./NetworksPanel";
 
 export const Sidebar = () => {
   return (
@@ -10,12 +10,12 @@ export const Sidebar = () => {
           fontSize: "1.5rem",
           lineHeight: "50px",
           textAlign: "center",
-          boxSizing: 'border-box'
+          boxSizing: "border-box",
         }}
       >
         IRC Rafa
       </div>
-      <ManageNetworks />
+      <NetworksPanel />
     </div>
   );
 };

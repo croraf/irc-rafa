@@ -1,6 +1,6 @@
 import { useAppSelector } from "../../app/hooks";
-import { selectChatHistoryMessages } from "../chatHistorySlice/chatHistorySlice";
 import { Box } from "@mui/system";
+import { selectChatHistoryMessages } from "../../features/chatHistorySlice/chatHistorySlice";
 
 /* const messages = [
   { author: "croraf", text: "Hi how are you.", timestamp: "Today 11:00" },

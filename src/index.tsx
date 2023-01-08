@@ -5,12 +5,17 @@ import { store } from "./app/store";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from '@mui/material/CssBaseline';
+import CssBaseline from "@mui/material/CssBaseline";
+import { setupSocket } from "./features/networking/socketInbound";
+import { setupIndexedDb } from "./features/indexedDb/indexedDbSetup";
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
   },
 });
+
+setupIndexedDb();
+setupSocket();
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);

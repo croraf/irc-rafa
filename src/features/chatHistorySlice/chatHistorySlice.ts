@@ -62,7 +62,9 @@ export const chatHistorySlice = createSlice({
       .addCase(changeActiveChannel.fulfilled, (state, action) => {
         state.messages = action.payload;
       })
-      .addCase(changeActiveChannel.rejected, (state) => {});
+      .addCase(changeActiveChannel.rejected, (state, action) => {
+        throw action;
+      });
   },
 });
 

@@ -1,9 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { useEffect } from "react";
-import { Socket } from "socket.io-client";
 import { useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
-import { selectNetworks } from "../networksSlice/networksSlice";
+import { addModifyNetwork } from "../commonActions/commonActions";
+import {
+  selectIndexedDbStatus,
+  selectSocketStatus,
+} from "../connectionsStatusesSlice/connectionsStatusesSlice";
+import { getSocket } from "../networking/socket";
+import { NetworkDescription } from "../networksSlice/networksSlice";
 
 export interface AuthDescription {
   networkName: string;
@@ -20,9 +25,17 @@ export const authenticationSlice = createSlice({
   name: "authentication",
   initialState,
   reducers: {
-    setAuthenticationStatus: (state, action: PayloadAction<AuthDescription>) => {
+    setAuthenticationStatus: (
+      state,
+      action: PayloadAction<AuthDescription>
+    ) => {
       state[action.payload.networkName] = action.payload.status;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(addModifyNetwork, (state, action) => {
+      state[action.payload.networkName] = "pending";
+    });
   },
 });
 
@@ -38,25 +51,25 @@ export const selectIsActiveChannelAuthenticated = (state: RootState) => {
 
 export const { setAuthenticationStatus } = authenticationSlice.actions;
 
-
 export default authenticationSlice.reducer;
 
-export const useAuthenticateAllNetworks = (
-  indexDbLoaded: boolean,
-  socket: Socket | undefined
-) => {
-  const networks = useAppSelector(selectNetworks);
+export const useAuthenticateNetwork = (network: NetworkDescription) => {
+  const indexDbStatus = useAppSelector(selectIndexedDbStatus);
+  const socketStatus = useAppSelector(selectSocketStatus);
 
   useEffect(() => {
-    if (!socket || !indexDbLoaded) {
-      return;
-    }
-    Object.values(networks).forEach((network) => {
-      socket.emit("auth", {
-        networkName: network.name,
+    if (indexDbStatus === "connected" && socketStatus === "connected") {
+      getSocket().emit("auth", {
+        networkName: network.networkName,
         username: network.username,
         password: network.password,
       });
-    });
-  }, [socket, indexDbLoaded, networks]);
+    }
+  }, [
+    indexDbStatus,
+    socketStatus,
+    network.networkName,
+    network.username,
+    network.password,
+  ]);
 };
